@@ -1,5 +1,6 @@
 package com.prd.yun;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -11,9 +12,11 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration.LocationMode;
 import com.baidu.mapapi.map.MyLocationData;
@@ -36,6 +39,10 @@ public class MainActivity extends ActionBarActivity {
     private LocationMode mCurrentMode;
     BitmapDescriptor mCurrentMarker;
     boolean isFirstLoc = true;// 是否首次定位
+
+    private Marker marker;
+
+    String myLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +73,17 @@ public class MainActivity extends ActionBarActivity {
         mLocClient.setLocOption(option);
         mLocClient.start();
 
+        mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext())
+                        .setTitle("我的位置")
+                        .setMessage(myLocation);
+                builder.create().show();
+                return false;
+            }
+        });
+
 
     }
 
@@ -91,8 +109,12 @@ public class MainActivity extends ActionBarActivity {
                 mBaiduMap.animateMapStatus(u);
                 Log.i("tag",ll.latitude +"  " +ll.longitude);
 
+                mCurrentMarker = BitmapDescriptorFactory
+                        .fromResource(R.mipmap.icon_gcoding);
+
                 OverlayOptions option = new MarkerOptions().position(ll).icon(mCurrentMarker);
-                mBaiduMap.addOverlay(option);
+                marker = (Marker)mBaiduMap.addOverlay(option);
+                marker.setTitle("我的位置");
 
                 GeoCoder getCoder = GeoCoder.newInstance();
                 ReverseGeoCodeOption reCodeOption = new ReverseGeoCodeOption();
@@ -107,6 +129,7 @@ public class MainActivity extends ActionBarActivity {
                     @Override
                     public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
 
+                        myLocation = reverseGeoCodeResult.getAddress();
                         Log.i("tag",reverseGeoCodeResult.getAddress()+":reverseGeoCodeResult");
                     }
                 });
