@@ -1,39 +1,49 @@
 package com.prd.testweb;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
+    private WebView wv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        wv = (WebView) findViewById(R.id.wv);
+        wv.loadUrl("http://www.baidu.com");
+
+        //获取WebSetting设置Webview属性和状态
+        WebSettings ws = wv.getSettings();
+        //使webview直接Javascript
+        ws.setJavaScriptEnabled(true);
+
+        //初始化Webviewclient
+        MyWebViewClient mv = new MyWebViewClient();
+
+
+
+        //设置网页在自己的WebView中显示
+        wv.setWebViewClient(mv);
+        wv.setWebChromeClient(new WebChromeClient());
+
     }
 
+    private class MyWebViewClient extends WebViewClient {
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        //重写父类方法，让新打开的网页在当前的WebView中显示
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
     }
+
+
 }
