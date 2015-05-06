@@ -1,6 +1,7 @@
 package com.prd.statisticalchart;
 /**
  * 这个类主要测试饼图
+ * 详细的内容请查看Achartengine的官方api
  */
 
 import android.app.Activity;
