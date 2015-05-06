@@ -4,12 +4,10 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/chart"
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"
-        android:background="#000"/>
+    <TextView
+        android:id="@+id/bingtu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="饼图测试页面"/>
 
 </LinearLayout>
