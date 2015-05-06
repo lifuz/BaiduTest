@@ -4,10 +4,15 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <TextView
+    <Button
         android:id="@+id/bingtu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="饼图测试页面"/>
+    <Button
+        android:id="@+id/zhexian"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="测试折线图"/>
 
 </LinearLayout>

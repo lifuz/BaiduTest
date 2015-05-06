@@ -16,6 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".PieActivity"/>
+        <activity android:name=".ZhexianActivity"/>
+        <activity android:name="org.achartengine.GraphicalActivity" />
     </application>
 
 </manifest>
