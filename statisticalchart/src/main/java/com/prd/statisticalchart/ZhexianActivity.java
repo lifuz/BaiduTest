@@ -60,15 +60,23 @@ public class ZhexianActivity extends Activity {
         //设置图名，x轴的名字，y轴的名字，
         setChartSettings(renderer, "Average temperature", "Month", "Temperature", 0.5, 12.5, -10, 40,
                 Color.LTGRAY, Color.LTGRAY);
+        //设置x轴上有几个点
         renderer.setXLabels(12);
+        //设置y轴有几个点
         renderer.setYLabels(10);
+        //设置图的背景上是否用表格的形式
         renderer.setShowGrid(true);
+        //设置x轴的对齐方式
         renderer.setXLabelsAlign(Paint.Align.RIGHT);
+        //设置y轴的对齐方式
         renderer.setYLabelsAlign(Paint.Align.RIGHT);
+        //是否显示缩放按钮
         renderer.setZoomButtonsVisible(true);
-        renderer.setPanLimits(new double[] { -10, 20, -10, 40 });
-        renderer.setZoomLimits(new double[] { -10, 20, -10, 40 });
-
+        //设置x轴和y轴的最大值和最小值
+        renderer.setPanLimits(new double[] { 0, 20, 0, 40 });
+        //设置折线的缩放范围
+        renderer.setZoomLimits(new double[] { 0, 20, 0, 40 });
+        //构建折线图的资料类
         XYMultipleSeriesDataset dataset = buildDataset(titles, x, values);
         XYSeries series = dataset.getSeriesAt(0);
         series.addAnnotation("Vacation", 6, 30);
@@ -80,9 +88,18 @@ public class ZhexianActivity extends Activity {
 
     }
 
+    /**
+     * 构建集合的资料类
+     * @param titles
+     * @param xValues
+     * @param yValues
+     * @return
+     */
     protected XYMultipleSeriesDataset buildDataset(String[] titles, List<double[]> xValues,
                                                    List<double[]> yValues) {
+        //初始化资料类
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+        //构建
         addXYSeries(dataset, titles, xValues, yValues, 0);
         return dataset;
     }
