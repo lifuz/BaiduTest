@@ -78,12 +78,16 @@ public class ZhexianActivity extends Activity {
         renderer.setZoomLimits(new double[] { 0, 20, 0, 40 });
         //构建折线图的资料类
         XYMultipleSeriesDataset dataset = buildDataset(titles, x, values);
+        //获取指定的折线
         XYSeries series = dataset.getSeriesAt(0);
+        //给折线设置标题
         series.addAnnotation("Vacation", 6, 30);
+        //设置意图，画出折线图
         Intent intent = ChartFactory.getLineChartIntent(this, dataset, renderer,
                 "Average temperature");
         Log.i("tag",intent.toString());
 
+        //启动折线图
         startActivity(intent);
 
     }
@@ -99,16 +103,26 @@ public class ZhexianActivity extends Activity {
                                                    List<double[]> yValues) {
         //初始化资料类
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
-        //构建
+        //构建资料类
         addXYSeries(dataset, titles, xValues, yValues, 0);
         return dataset;
     }
 
+    /**
+     * 构建资料类
+     * @param dataset
+     * @param titles
+     * @param xValues
+     * @param yValues
+     * @param scale
+     */
     public void addXYSeries(XYMultipleSeriesDataset dataset, String[] titles, List<double[]> xValues,
                             List<double[]> yValues, int scale) {
         int length = titles.length;
         for (int i = 0; i < length; i++) {
+            //构建标签
             XYSeries series = new XYSeries(titles[i], scale);
+            //构建点
             double[] xV = xValues.get(i);
             double[] yV = yValues.get(i);
             int seriesLength = xV.length;
